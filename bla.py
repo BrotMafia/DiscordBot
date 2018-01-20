@@ -7,15 +7,19 @@ descriptionHelp = " 6"
 descriptionBjoern = " geht nicht"
 
 
-liedText1 = "test"
+liedText1 = "Dupstep"
 liedURL1 = "https://www.youtube.com/watch?v=-Enoi_D-31o&t=844s"
-liedText2 = "lied"
-liedURL2 = "https://www.youtube.com/watch?v=_Zxd4t0QLm0"
+liedText2 = "Chillstep"
+liedURL2 = "https://www.youtube.com/watch?v=L_MeMFHc_xE"
 liedText3 = "https:"
 liedURL3 = ""
+liedText4 = "Workout"
+liedURL4 = "https://www.youtube.com/watch?v=erHAF4txHfA"
+liedText5 = "Chillout"
+liedURL5 = "https://www.youtube.com/watch?v=-kBhum7f4rI&t=2852s"
 
 channel = "401748926207754240" #Brot default channel
 
 
 prefix = "!"
-token = "NDAxMDI2MjIxMjU0NzcwNjg4.DUFGIQ.4G-MD3GoNU-hCzo08capS6o-bTI"
+token = "NDA0MjU1MDk4NjY0MTI0NDM3.DUTLaw.9-WbphKF6b3WupJ6zCLYnLoOcUg"

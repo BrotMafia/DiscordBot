@@ -87,43 +87,65 @@ async def on_message(message):
                 await d.send_message(message.channel, 'Der Fehler ist: ```{fehler1}```'.format(fehler1=fehler))
     if message.content.startswith(bla.prefix + 'play'):
         bla.liedURL3 = message.content[6:]
-        try:
-            if message.content[6:].startswith(bla.liedText1):
-                try:
-                    channel = message.author.voice.voice_channel
-                    voice = await d.join_voice_channel(channel)
-                    player = await voice.create_ytdl_player(bla.liedURL1)
-                    d.send_message(message.channel, "Wird geladen...")
-                    players[message.server.id] = player
-                    player.start()
-                    d.send_message(message.channel, "Wurde geladen!")
-                except:
-                    pass
+        if message.content[6:].startswith(bla.liedText1):
+            try:
+                channel = message.author.voice.voice_channel
+                voice = await d.join_voice_channel(channel)
+                print("join")
+                d.send_message(message.channel, "Wird geladen...")
+                player = await voice.create_ytdl_player(bla.liedURL1)
+                players[message.server.id] = player
+                player.start()
+                d.send_message(message.channel, "Wurde geladen!")
+            except Exception as error:
+                await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
+        elif message.content[6:].startswith(bla.liedText2):
+            try:
+                channel = message.author.voice.voice_channel
+                voice = await d.join_voice_channel(channel)
+                player = await voice.create_ytdl_player(bla.liedURL2)
+                d.send_message(message.channel, "Wird geladen...")
+                players[message.server.id] = player
+                player.start()
+                d.send_message(message.channel, "Wurde geladen!")
+            except Exception as error:
+                await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
+        elif message.content[6:].startswith(bla.liedText3):
+            try:
+                channel = message.author.voice.voice_channel
+                voice = await d.join_voice_channel(channel)
+                player = await voice.create_ytdl_player(bla.liedURL3)
+                d.send_message(message.channel, "Wird geladen...")
+                players[message.server.id] = player
+                player.start()
+                d.send_message(message.channel, "Wurde geladen!")
+            except:
+                pass
+        elif message.content[6:].startswith(bla.liedText4):
+            try:
+                channel = message.author.voice.voice_channel
+                voice = await d.join_voice_channel(channel)
+                player = await voice.create_ytdl_player(bla.liedURL4)
+                d.send_message(message.channel, "Wird geladen...")
+                players[message.server.id] = player
+                player.start()
+                d.send_message(message.channel, "Wurde geladen!")
+            except:
+                pass
+        elif message.content[6:].startswith(bla.liedText5):
+            try:
+                channel = message.author.voice.voice_channel
+                voice = await d.join_voice_channel(channel)
+                player = await voice.create_ytdl_player(bla.liedURL5)
+                d.send_message(message.channel, "Wird geladen...")
+                players[message.server.id] = player
+                player.start()
+                d.send_message(message.channel, "Wurde geladen!")
+            except:
+                pass
+    if message.content.startswith(bla.prefix + 'lieder'):
+        await d.send_message(message.channel, 'Du kannst mit !play + einem der folgenden namen bestimmte lieder auswählen: \n - Dupstep \n - Chillstep \n - Workout\n - Chillout \n - oder einfach plus einen Link ')
 
-            elif message.content[6:].startswith(bla.liedText2):
-                try:
-                    channel = message.author.voice.voice_channel
-                    voice = await d.join_voice_channel(channel)
-                    player = await voice.create_ytdl_player(bla.liedURL2)
-                    d.send_message(message.channel, "Wird geladen...")
-                    players[message.server.id] = player
-                    player.start()
-                    d.send_message(message.channel, "Wurde geladen!")
-                except Exception as error:
-                    await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
-            elif message.content[6:].startswith(bla.liedText3):
-                try:
-                    channel = message.author.voice.voice_channel
-                    voice = await d.join_voice_channel(channel)
-                    player = await voice.create_ytdl_player(bla.liedURL3)
-                    d.send_message(message.channel, "Wird geladen...")
-                    players[message.server.id] = player
-                    player.start()
-                    d.send_message(message.channel, "Wurde geladen!")
-                except Exception as error:
-                    await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
-        except:
-            pass
     if message.content.startswith(bla.prefix + 'pause'):
         try:
             players[message.server.id].pause()
