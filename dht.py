@@ -56,6 +56,7 @@ async def on_message(message):
     if message.content.startswith(bla.prefix + 'help'):
        await d.send_message(message.channel, 'Es gibt die Befehle:' )
        await d.send_message(message.channel, '! test' + bla.descriptionTest)
+       await d.send_message(message.channel, embed=discord.Embed(color=discord.Color.red(),descrition="Please enter a valid value for message ammount!"))
        await d.send_message(message.channel, '! sleep' + bla.descriptionSleep)
        await d.send_message(message.channel, '! text' + bla.descriptionText)
        await d.send_message(message.channel, '! game' + bla.descriptionGame)
@@ -96,7 +97,9 @@ async def on_message(message):
                     players[message.server.id] = player
                     player.start()
                     d.send_message(message.channel, "Wurde geladen!")
-                except discord.Err
+                except:
+                    pass
+
             elif message.content[6:].startswith(bla.liedText2):
                 try:
                     channel = message.author.voice.voice_channel
