@@ -18,4 +18,4 @@ channel = "401748926207754240" #Brot default channel
 
 
 prefix = "!"
-token = "NDAxMDI2MjIxMjU0NzcwNjg4.DUFGIQ.4G-MD3GoNU-hCzo08capS6o-bTI"
+token = "Token"
