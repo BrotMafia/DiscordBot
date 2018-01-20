@@ -16,10 +16,11 @@ liedURL3 = ""
 liedText4 = "Workout"
 liedURL4 = "https://www.youtube.com/watch?v=erHAF4txHfA"
 liedText5 = "Chillout"
-liedURL5 = "https://www.youtube.com/watch?v=-kBhum7f4rI&t=2852s"
+liedURL5 = "https://www.youtube.com/watch?v=88n_QV9vR6o"
 
 channel = "401748926207754240" #Brot default channel
 
 
 prefix = "!"
 token = "NDA0MjU1MDk4NjY0MTI0NDM3.DUTLaw.9-WbphKF6b3WupJ6zCLYnLoOcUg"
+#gg
