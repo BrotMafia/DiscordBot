@@ -23,4 +23,3 @@ channel = "401748926207754240" #Brot default channel
 
 prefix = "!"
 token = "NDA0MjU1MDk4NjY0MTI0NDM3.DUTLaw.9-WbphKF6b3WupJ6zCLYnLoOcUg"
-#gg

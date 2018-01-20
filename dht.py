@@ -171,8 +171,7 @@ async def on_member_join(member):
 
 d.run(bla.token)
 
-#
-# await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
 
 
-#hallo björn
+
+#hallo 
