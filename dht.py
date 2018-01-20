@@ -141,8 +141,26 @@ async def on_message(message):
                 players[message.server.id] = player
                 player.start()
                 d.send_message(message.channel, "Wurde geladen!")
-            except:
-                pass
+            except Exception as error:
+                await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
+        elif message.content[6:].startswith('loop'):
+            print("loop")
+            try:
+                i = 0
+                print("try")
+                while i < 4:
+                    print("loop")
+                    channel = message.author.voice.voice_channel
+                    voice = await d.join_voice_channel(channel)
+                    player = await voice.create_ytdl_player(bla.lieder[1:4])
+                    d.send_message(message.channel, "Wird geladen...")
+                    players[message.server.id] = player
+                    player.start()
+                    d.send_message(message.channel, "Wurde geladen!")
+                    i = i +1
+            except Exception as error:
+                await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
+
     if message.content.startswith(bla.prefix + 'lieder'):
         await d.send_message(message.channel, 'Du kannst mit !play + einem der folgenden namen bestimmte lieder auswählen: \n - Dupstep \n - Chillstep \n - Workout\n - Chillout \n - oder einfach plus einen Link ')
 
@@ -172,6 +190,6 @@ async def on_member_join(member):
 d.run(bla.token)
 
 
-
+d.embed(discord.colour())
 
 #hallo 
