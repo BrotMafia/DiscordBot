@@ -1,6 +1,7 @@
 import asyncio
 import discord
 import bla
+import commands
 
 players = {}
 d = discord.Client()
@@ -17,10 +18,14 @@ async def on_ready():
     print('------')
     await d.change_presence(game=discord.Game(name='Bester Discord der Welt'))
 
+#=======================================================================================================================
+#================================================Nachrichten Fukntion===================================================
+#=======================================================================================================================
 
 @d.event
 async def on_message(message):
-    if message.content.startswith(bla.prefix + 'test'):
+    # ======================================================================================================Test command
+    if message.content.startswith(bla.prefix + commands.test):
         counter = 0
         tmp = await d.send_message(message.channel, 'Calculating messages...')
         async for log in d.logs_from(message.channel, limit=100):
@@ -28,13 +33,19 @@ async def on_message(message):
                 counter += 1
 
         await d.edit_message(tmp, 'You have {} messages.'.format(counter))
-    elif message.content.startswith(bla.prefix + 'sleep'):
+    # =====================================================================================================Sleep command
+    elif message.content.startswith(bla.prefix + commands.sleep):
         await asyncio.sleep(5)
         await d.send_message(message.channel, 'Done sleeping')
-    if message.content.startswith(bla.prefix + 'text'):
-        await d.send_message(message.channel, 'hallo halloi ')
-        d.change_nickname()
-    if message.content.startswith(bla.prefix + 'game'):
+    # =======================================================================================================Say Command
+    if message.content.startswith(bla.prefix + commands.text):
+        try:
+            text = message.content[5:]
+            await d.send_message(message.channel, text)
+        except Exception as error:
+            await d.send_message(message.channel, 'Der Fehler ist: ```{error}```'.format(error=error))
+    # ======================================================================================================Game command
+    if message.content.startswith(bla.prefix + commands.game):
         print('geht 1')
         if message.author.id == bananenbrot:
             game = message.content[6:]
@@ -49,26 +60,23 @@ async def on_message(message):
             await  d.send_message(message.channel, 'Ich habe mein Spiel zu ' + game + ' geändert')
         else:
             d.send_message(message.channel, '----------nicht genug rechte----------')
-    if message.content.startswith(bla.prefix + 'restart'):
+    # ===================================================================================================Restart command
+    if message.content.startswith(bla.prefix + commands.restart):
         await d.change_presence(game=discord.Game(name='--restart--'))
         d.close()
         print('restart')
-    if message.content.startswith(bla.prefix + 'help'):
-       await d.send_message(message.channel, 'Es gibt die Befehle:' )
-       await d.send_message(message.channel, '! test' + bla.descriptionTest)
-       await d.send_message(message.channel, embed=discord.Embed(color=discord.Color.red(),descrition="Please enter a valid value for message ammount!"))
-       await d.send_message(message.channel, '! sleep' + bla.descriptionSleep)
-       await d.send_message(message.channel, '! text' + bla.descriptionText)
-       await d.send_message(message.channel, '! game' + bla.descriptionGame)
-       await d.send_message(message.channel, '! restart' + bla.descriptionRestart)
-       await d.send_message(message.channel, '! help' + bla.descriptionHelp)
-       await d.send_message(message.channel, '! bjoern' + bla.descriptionBjoern)
-    if message.content.startswith(bla.prefix + 'bjoern'):
+    # ======================================================================================================Help command
+    if message.content.startswith(bla.prefix + commands.help):
+       await d.send_message(message.channel, 'Es gibt die Befehle:\n' )
+       await d.send_message(message.channel, ' - ' + bla.descriptionTest + '\n - '+ bla.descriptionText+ '\n - '+bla.descriptionGame+'\n - '+bla.descriptionRestart+'\n - '+bla.descriptionHelp+'\n - '+bla.descriptionBjoern+'\n - '+bla.descriptionSleep)
+    # =====================================================================================================bjoen command
+    if message.content.startswith(bla.prefix + commands.bjoern):
         if message.author.id == bananenbrot:
             d.send_message(message.channel, 'Hallo Björn')
         if message.author.id == vollkornbrot:
             d.send_message(message.channel, 'Hallo Björn')
-    if message.content.startswith(bla.prefix + 'join'):
+    # ======================================================================================================Join command
+    if message.content.startswith(bla.prefix + commands.join):
             try:
                 channel = message.author.voice.voice_channel
                 await d.join_voice_channel(channel)
@@ -77,7 +85,8 @@ async def on_message(message):
                 print('...')
             except Exception as error:
                 await d.send_message(message.channel, 'Der Fehler ist: ```{error}```'.format(error=error))
-    if message.content.startswith(bla.prefix + 'quit'):
+    # ===================================================================================================== Quit command
+    if message.content.startswith(bla.prefix + commands.quit):
             try:
                 voice_client = d.voice_client_in(message.server)
                 await  voice_client.disconnect()
@@ -85,7 +94,8 @@ async def on_message(message):
                 await d.send_message(message.channel, 'Ich bin in keinem Channel...')
             except Exception as fehler:
                 await d.send_message(message.channel, 'Der Fehler ist: ```{fehler1}```'.format(fehler1=fehler))
-    if message.content.startswith(bla.prefix + 'play'):
+    # ======================================================================================================Play command
+    if message.content.startswith(bla.prefix + commands.music):
         bla.liedURL3 = message.content[6:]
         if message.content[6:].startswith(bla.liedText1):
             try:
@@ -160,27 +170,39 @@ async def on_message(message):
                     i = i +1
             except Exception as error:
                 await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
-
-    if message.content.startswith(bla.prefix + 'lieder'):
+    # ======================================================================================================lieder commnd
+    if message.content.startswith(bla.prefix + commands.lieder):
         await d.send_message(message.channel, 'Du kannst mit !play + einem der folgenden namen bestimmte lieder auswählen: \n - Dupstep \n - Chillstep \n - Workout\n - Chillout \n - oder einfach plus einen Link ')
 
-    if message.content.startswith(bla.prefix + 'pause'):
+    # =====================================================================================================Pause command
+    if message.content.startswith(bla.prefix + commands.pause):
         try:
             players[message.server.id].pause()
         except Exception as error:
             await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
-    if message.content.startswith(bla.prefix + 'resume'):
+    # ====================================================================================================Resume command
+    if message.content.startswith(bla.prefix + commands.resume):
         try:
             players[message.server.id].resume()
         except Exception as error:
             await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
-    if message.content.startswith(bla.prefix + 'kick'):
+    # ======================================================================================================Kick command
+    if message.content.startswith(bla.prefix + commands.kick):
         member = message.content[6:]
 
         member.User.id
 
         await d.kick(member)
-
+    # =================================================================================================flüsstern command
+    if message.content.startswith(bla.prefix + commands.whisper):
+        try:
+            text = message.content[6:]
+            d.send_message(message.channel, text)
+        except Exception as error:
+            await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
+#=======================================================================================================================
+#================================================Member Join Fukntion===================================================
+#=======================================================================================================================
 @d.event
 async def on_member_join(member):
     chennel = bla.channel
