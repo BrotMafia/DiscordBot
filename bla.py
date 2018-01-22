@@ -25,7 +25,10 @@ liedText5 = "Chillout"
 liedURL5 = "https://www.youtube.com/watch?v=88n_QV9vR6o"
 lieder = ["https://www.youtube.com/watch?v=-Enoi_D-31o&t=844s", "https://www.youtube.com/watch?v=L_MeMFHc_xE",
           "https://www.youtube.com/watch?v=erHAF4txHfA", "https://www.youtube.com/watch?v=88n_QV9vR6o"]
+counter = 3
 
 channel = "401748926207754240"  # Brot default channel
 
 token = "NDA0MjU1MDk4NjY0MTI0NDM3.DUTLaw.9-WbphKF6b3WupJ6zCLYnLoOcUg"
+
+embed = ""

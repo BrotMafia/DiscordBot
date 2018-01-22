@@ -15,6 +15,8 @@ async def on_ready():
     print('Logged in as')
     print(d.user.name)
     print(d.user.id)
+    print(d.user.bot)
+    print(d.user.display_name)
     print('------')
     await d.change_presence(game=discord.Game(name='Bester Discord der Welt'))
 
@@ -68,13 +70,14 @@ async def on_message(message):
     # ======================================================================================================Help command
     if message.content.startswith(bla.prefix + commands.help):
        await d.send_message(message.channel, 'Es gibt die Befehle:\n' )
-       await d.send_message(message.channel, ' - ' + bla.descriptionTest + '\n - '+ bla.descriptionText+ '\n - '+bla.descriptionGame+'\n - '+bla.descriptionRestart+'\n - '+bla.descriptionHelp+'\n - '+bla.descriptionBjoern+'\n - '+bla.descriptionSleep)
+       await d.send_message(message.channel, ' - ' + bla.descriptionTest + '\n - '+ bla.descriptionText+ '\n - '+bla.descriptionGame+'\n - '+bla.descriptionRestart+'\n - '+bla.descriptionHelp+'\n - '+bla.descriptionBjoern+'\n - '+bla.descriptionSleep+ '\n - '+bla.descriptionMusic+'\n - '+bla.descriptionPause+'\n - '+bla.descriptionResume+'\n - '+bla.descriptionLieder)
     # =====================================================================================================bjoen command
     if message.content.startswith(bla.prefix + commands.bjoern):
         if message.author.id == bananenbrot:
             d.send_message(message.channel, 'Hallo Björn')
         if message.author.id == vollkornbrot:
             d.send_message(message.channel, 'Hallo Björn')
+            d.get
     # ======================================================================================================Join command
     if message.content.startswith(bla.prefix + commands.join):
             try:
@@ -153,7 +156,7 @@ async def on_message(message):
                 d.send_message(message.channel, "Wurde geladen!")
             except Exception as error:
                 await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
-        elif message.content[6:].startswith('loop'):
+        elif message.content[6:].startswith(commands.loop):
             print("loop")
             try:
                 i = 0
@@ -162,7 +165,7 @@ async def on_message(message):
                     print("loop")
                     channel = message.author.voice.voice_channel
                     voice = await d.join_voice_channel(channel)
-                    player = await voice.create_ytdl_player(bla.lieder[1:4])
+                    player = await voice.create_ytdl_player(bla.lieder[i])
                     d.send_message(message.channel, "Wird geladen...")
                     players[message.server.id] = player
                     player.start()
@@ -200,18 +203,75 @@ async def on_message(message):
             d.send_message(message.channel, text)
         except Exception as error:
             await d.send_message(message.channel, 'Der Fehler ist: ```{fehler}```'.format(fehler=error))
+    # =================================================================================================Embed command
+    if message.content.lower().startswith('!embed'):
+        bla.embed = discord.Embed(
+            title="Willkomen auf dem BrotDiscord",
+            color=0xe91e63,
+            description="Folge uns auf Steam:\n"
+                        "http://bit.ly/2mWOU08\n"
+                        "http://bit.ly/2G2TGSz"
+        )
+        bla.embed.set_author(
+            name=d.user.display_name,
+            icon_url="https://cdn.pixabay.com/photo/2017/04/01/12/36/bread-2193537_960_720.jpg",
+            url="http://steamcommunity.com/groups/Broetchen1"
+        )
+        bla.embed.add_field(
+            name="Befehle:",
+            value=bla.descriptionMusic+"\n"
+                  +bla.descriptionPause+'\n'+
+                  bla.descriptionResume+'\n'+
+                  bla.descriptionLieder+'\n'+
+                  bla.descriptionHelp+'\n'+
+                  bla.descriptionText+'\n'+
+                  bla.descriptionTest+'\n',
+            inline=False
+        )
+        bla.embed.set_footer(
+            text="Ein bot von mir",
+            icon_url="https://cdn.pixabay.com/photo/2017/04/01/12/36/bread-2193537_960_720.jpg"
+        )
+        bla.embed.set_thumbnail(
+            url="https://cdn.pixabay.com/photo/2017/04/01/12/36/bread-2193537_960_720.jpg"
+        )
+
+        await d.send_message(message.channel, embed=bla.embed)
+
+    if message.content.startswith('!test'):
+        text = d.message.content[7:].raw_mentions
+        text1 = text.raw_mentions
+        name = d.Server.get_member(text1)
+        await d.send_message(message.channel, name)
+    if message.content.startswith(bla.prefix + commands.add):
+        if message.content[5:].startswith(commands.lied):
+            text = message.content[10:]
+            bla.lieder.append(text)
+            print(text)
+            print(bla.lieder)
+            print(bla.counter)
+            bla.counter += bla.counter
+        if message.content[5:].startswith('test'):
+            channel = message.author.voice.voice_channel
+            voice = await d.join_voice_channel(channel)
+            player = await voice.create_ytdl_player(bla.lieder[bla.counter])
+            d.send_message(message.channel, "Wird geladen...")
+            players[message.server.id] = player
+            player.start()
+            d.send_message(message.channel, "Wurde geladen!")
+
+
+
+
+
 #=======================================================================================================================
 #================================================Member Join Fukntion===================================================
 #=======================================================================================================================
-@d.event
-async def on_member_join(member):
-    chennel = bla.channel
-    await d.send_message(discord.message.channel, "hi")
-
 
 d.run(bla.token)
 
 
 d.embed(discord.colour())
 
-#hallo 
+#hallo
+
