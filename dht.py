@@ -250,7 +250,6 @@ async def on_message(message):
             print(text)
             print(bla.lieder)
             print(bla.counter)
-            bla.counter += bla.counter
         if message.content[5:].startswith('test'):
             channel = message.author.voice.voice_channel
             voice = await d.join_voice_channel(channel)
