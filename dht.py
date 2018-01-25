@@ -26,19 +26,6 @@ async def on_ready():
 
 @d.event
 async def on_message(message):
-    # ======================================================================================================Test command
-    if message.content.startswith(bla.prefix + commands.test):
-        counter = 0
-        tmp = await d.send_message(message.channel, 'Calculating messages...')
-        async for log in d.logs_from(message.channel, limit=100):
-            if log.author == message.author:
-                counter += 1
-
-        await d.edit_message(tmp, 'You have {} messages.'.format(counter))
-    # =====================================================================================================Sleep command
-    elif message.content.startswith(bla.prefix + commands.sleep):
-        await asyncio.sleep(5)
-        await d.send_message(message.channel, 'Done sleeping')
     # =======================================================================================================Say Command
     if message.content.startswith(bla.prefix + commands.text):
         try:
@@ -206,7 +193,7 @@ async def on_message(message):
     # =================================================================================================Embed command
     if message.content.lower().startswith('!embed'):
         bla.embed = discord.Embed(
-            title="Willkomen auf dem BrotDiscord",
+            title="Willkommen {0} auf {1}".format(member.mention, member.server.name),
             color=0xe91e63,
             description="Folge uns auf Steam:\n"
                         "http://bit.ly/2mWOU08\n"
@@ -245,7 +232,7 @@ async def on_message(message):
         await d.send_message(message.channel, name)
     if message.content.startswith(bla.prefix + commands.add):
         if message.content[5:].startswith(commands.lied):
-            text = message.content[10:]
+            bla.neulied = message.content[10:]
             bla.lieder.append(text)
             print(text)
             print(bla.lieder)
@@ -263,9 +250,57 @@ async def on_message(message):
 
 
 
+
+
 #=======================================================================================================================
 #================================================Member Join Fukntion===================================================
 #=======================================================================================================================
+
+@d.event
+async def on_member_join(member):
+    channel = bla.channel
+    serverchannel = member.server.get_channel(channel)
+    bla.embed = discord.Embed(
+        title="Willkommen {0} auf {1}".format(member.mention, member.server.name),
+        color=0xe91e63,
+        description="Folge uns auf Steam:\n"
+                    "http://bit.ly/2mWOU08\n"
+                    "http://bit.ly/2G2TGSz"
+    )
+    bla.embed.set_author(
+        name=d.user.display_name,
+        icon_url="https://cdn.pixabay.com/photo/2017/04/01/12/36/bread-2193537_960_720.jpg",
+        url="http://steamcommunity.com/groups/Broetchen1"
+    )
+    bla.embed.add_field(
+        name="Befehle:",
+        value=bla.descriptionMusic+"\n"
+              +bla.descriptionPause+'\n'+
+              bla.descriptionResume+'\n'+
+              bla.descriptionLieder+'\n'+
+              bla.descriptionHelp+'\n'+
+              bla.descriptionText+'\n',
+        inline=False
+    )
+    bla.embed.set_footer(
+        text="Ein bot von mir",
+        icon_url="https://cdn.pixabay.com/photo/2017/04/01/12/36/bread-2193537_960_720.jpg"
+    )
+    bla.embed.set_thumbnail(
+        url="https://cdn.pixabay.com/photo/2017/04/01/12/36/bread-2193537_960_720.jpg"
+    )
+
+    await d.send_message(serverchannel, embed=bla.embed)
+
+
+
+@d.event
+async def on_member_remove(member):
+    channel = bla.channel
+    serverchannel = member.server.get_channel(channel)
+    msg = "Bye Bye {0}".format(member.mention)
+    await d.send_message(serverchannel, msg)
+
 
 d.run(bla.token)
 
@@ -273,4 +308,3 @@ d.run(bla.token)
 d.embed(discord.colour())
 
 #hallo
-
